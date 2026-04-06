@@ -1,43 +1,41 @@
 let tasks = [];
-
+console.log(tasks);
 function addTask (name) {
-    let i = tasks.length +1;
     let newTask = {
-        id: i,
+        id: Date.now(),
         name: name,
         status: false,
     }
     tasks.push(newTask);
-    renderTask()
+    renderTask();
 }
 // addTask();
 
 function deleteTask(id){
     tasks = tasks.filter(task => id !== task.id);
+    renderTask();
 }
 
 // deleteTask();
 // console.log(tasks);
 
 let toggleComplete = (id) => {
-   let newTasks = tasks.find(task => id == task.id);
-    newTasks.status = !newTasks.status;
+   let targetTask = tasks.find(task => id == task.id);
+    targetTask.status = !targetTask.status;
+    renderTask();
 }
 // toggleComplete();
 // console.log(tasks);
 
 function renderTask(){
     let count = document.getElementById('count');
-    count.innerHTML = countRemaining();;
+    count.innerHTML = countRemaining();
     let displayTasks = document.getElementById('taskList');
     displayTasks.innerHTML = "";
 
     tasks.forEach(task => {
             let li = document.createElement('li');
             li.textContent = task.name;
-            li.style.listStyleType = 'none';
-            li.style.padding = '10px';
-            li.style.border = '1px solid #e2e2e2';
             if(task.status){
                 li.style.textDecoration = 'line-through';
                 li.style.opacity = "0.5";
@@ -50,14 +48,12 @@ function renderTask(){
             delBtn.style.background = '#ffff';
             delBtn.addEventListener('click', () => {
                 deleteTask(task.id);
-                renderTask();
             })
 
             let completeBtn = document.createElement('button');
             completeBtn.textContent = task.status ? 'Undo' : 'Complete';
             completeBtn.addEventListener('click', () => {
                 toggleComplete(task.id);
-                renderTask();   
             })
 
             li.appendChild(delBtn);
