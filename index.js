@@ -16,6 +16,7 @@ function addTask(name) {
     }
     tasks.push(newTask);  // Add new task to the end of the array
     saveTasks();          // Persist updated array to localStorage
+    renderTask();
 }
 
 // PURPOSE: Remove a task from the array by its id
@@ -24,6 +25,7 @@ function deleteTask(id) {
     // Keep every task whose id does NOT match — effectively removes the target
     tasks = tasks.filter(task => id !== task.id);
     saveTasks();
+    renderTask();
 }
 
 // PURPOSE: Flip a task's status between complete and not complete
@@ -34,6 +36,7 @@ let toggleComplete = (id) => {
     // ! flips the boolean — false becomes true, true becomes false
     targetTask.status = !targetTask.status;
     saveTasks();
+    renderTask();
 }
 
 // PURPOSE: Clear the DOM list and redraw it from the current tasks array
